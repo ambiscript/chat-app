@@ -13,6 +13,7 @@ mat-spinner {
 
 .post-image {
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .post-image img {
