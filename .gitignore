@@ -3,6 +3,9 @@
 # secret file(s)
 /backend/secret.json
 
+# Development post images - remove in production
+/backend/images
+
 # compiled output
 /dist
 /tmp
