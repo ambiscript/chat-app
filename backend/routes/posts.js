@@ -8,7 +8,7 @@ const router = new express.Router();
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
-  'image/jpg': 'jpg',
+  'image/jpg': 'jpg'
 };
 
 const storage = multer.diskStorage({
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     const name = file.originalname.toLowerCase().split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
     cb(null, `${name}-${Date.now()}.${ext}`);
-  },
+  }
 });
 
 router.post(
@@ -36,7 +36,7 @@ router.post(
       _id: req.body.id,
       title: req.body.title,
       content: req.body.content,
-      imagePath: `${url}/images/${req.file.filename}`,
+      imagePath: `${url}/images/${req.file.filename}`
     });
     post.save().then((createdPost) => {
       res.status(201).json({
@@ -45,11 +45,11 @@ router.post(
           id: createdPost._id,
           title: createdPost.title,
           content: createdPost.content,
-          imagePath: createdPost.imagePath,
-        },
+          imagePath: createdPost.imagePath
+        }
       });
     });
-  },
+  }
 );
 
 router.put(
@@ -65,20 +65,20 @@ router.put(
       _id: req.body.id,
       title: req.body.title,
       content: req.body.content,
-      imagePath: imagePath,
+      imagePath: imagePath
     });
     console.log(post);
     Post.updateOne({ _id: req.params.id }, post).then(() => {
       res.status(200).json({ message: 'Update successful!' });
     });
-  },
+  }
 );
 
 router.get('', (req, res) => {
   Post.find().then((documents) => {
     res.status(200).json({
       message: 'Posts fetched successfully',
-      posts: documents,
+      posts: documents
     });
   });
 });
