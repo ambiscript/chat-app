@@ -17,7 +17,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     route: ActivatedRouteSnapshot,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
     const isAuth = this.authService.getIsAuth();
@@ -26,6 +28,4 @@ export class AuthGuard implements CanActivate {
     }
     return isAuth;
   }
-}
-{
 }

@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
         secret.privateTokenKey,
         { expiresIn: '1h' }
       );
-      res.status(200).json({ token: token });
+      res.status(200).json({ token: token, expiresIn: 3600 });
     })
     .catch((err) => {
       console.error(err);
