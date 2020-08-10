@@ -5,7 +5,11 @@ const secret = require('../secret.json').userAuth;
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, secret.privateTokenKey);
+    const decodedToken = jwt.verify(token, secret.privateTokenKey);
+    req.userData = {
+      email: decodedToken.email,
+      userId: decodedToken.userId
+    };
     next();
   } catch (err) {
     console.error(err);

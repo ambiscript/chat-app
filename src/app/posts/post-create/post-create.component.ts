@@ -50,6 +50,7 @@ export class PostCreateComponent implements OnInit {
           .subscribe((postData) => {
             this.isLoading = false;
             this.post = {
+              user: postData.user,
               id: postData._id,
               title: postData.title,
               content: postData.content,

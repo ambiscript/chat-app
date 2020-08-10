@@ -36,6 +36,7 @@ router.post(
     const url = `${req.protocol}://${req.get('host')}`;
     const post = new Post({
       _id: req.body.id,
+      user: req.userData.userId,
       title: req.body.title,
       content: req.body.content,
       imagePath: `${url}/images/${req.file.filename}`
@@ -45,6 +46,7 @@ router.post(
         message: 'Post added successfully',
         post: {
           id: createdPost._id,
+          user: req.userData.userId,
           title: createdPost.title,
           content: createdPost.content,
           imagePath: createdPost.imagePath
@@ -66,12 +68,20 @@ router.put(
     }
     const post = new Post({
       _id: req.body.id,
+      user: req.userData.userId,
       title: req.body.title,
       content: req.body.content,
       imagePath: imagePath
     });
-    Post.updateOne({ _id: req.params.id }, post).then(() => {
-      res.status(200).json({ message: 'Update successful!' });
+    Post.updateOne(
+      { _id: req.params.id, user: req.userData.userId },
+      post
+    ).then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({ message: 'Update Successful!' });
+      } else {
+        res.status(401).json({ message: 'Not Authorized!' });
+      }
     });
   }
 );
@@ -109,8 +119,15 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/:id', checkAuth, (req, res) => {
-  Post.deleteOne({ _id: req.params.id }).then(() => {
-    res.status(200).json({ message: 'Post deleted.' });
+  Post.deleteOne({
+    _id: req.params.id,
+    user: req.userData.userId
+  }).then((result) => {
+    if (result.n > 0) {
+      res.status(200).json({ message: 'Post Deleted!' });
+    } else {
+      res.status(401).json({ message: 'Not Authorized!' });
+    }
   });
 });
 

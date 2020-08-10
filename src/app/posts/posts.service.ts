@@ -31,7 +31,8 @@ export class PostsService {
                 title: post.title,
                 content: post.content,
                 id: post._id,
-                imagePath: post.imagePath
+                imagePath: post.imagePath,
+                user: post.user
               };
             }),
             maxPosts: postData.maxPosts
@@ -53,6 +54,7 @@ export class PostsService {
 
   getPost(id: string) {
     return this.http.get<{
+      user: string;
       _id: string;
       title: string;
       content: string;
@@ -90,6 +92,7 @@ export class PostsService {
       postData.append('image', image, title);
     } else {
       postData = {
+        user: null,
         id: id,
         title: title,
         content: content,
