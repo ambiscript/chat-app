@@ -2,18 +2,23 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const auth = require('./secret.json')['mongodb-auth'];
+const auth = require('./secret.json').mongodbAuth;
 
 const postsRoutes = require('./routes/posts');
+const userRoutes = require('./routes/users');
 
 const app = express();
 
+const uri =
+  `mongodb+srv://${auth.user}:${auth.password}@cluster0.0njld.mongodb.net/` +
+  `${auth.dbname}?retryWrites=true&w=majority`;
+
 mongoose
-  .connect(
-    `mongodb+srv://${auth.user}:${auth.password}@cluster0.0njld.mongodb.net/` +
-      `${auth.dbname}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
   .then(() => {
     console.log('Connected to database!');
   })
@@ -39,5 +44,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/posts', postsRoutes);
+app.use('/api/user', userRoutes);
 
 module.exports = app;
