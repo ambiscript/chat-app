@@ -7,7 +7,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'mean-udemy-course';
+  title = 'Ambiscript Chat Application';
 
   constructor(private authService: AuthService) {}
 
