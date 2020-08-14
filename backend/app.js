@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const auth = require('./secret.json').mongodbAuth;
 
 const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/users');
@@ -10,8 +9,9 @@ const userRoutes = require('./routes/users');
 const app = express();
 
 const uri =
-  `mongodb+srv://${auth.user}:${auth.password}@cluster0.0njld.mongodb.net/` +
-  `${auth.dbname}?retryWrites=true&w=majority`;
+  `mongodb+srv://${process.env.MONGO_ATLAS_USER}:` +
+  `${process.env.MONGO_ATLAS_PW}@${process.env.MONGO_ATLAS_URL}/` +
+  `${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(uri, {
@@ -31,7 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/images', express.static(path.join('backend/images')));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'http://localhost:4200'
+  );
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
