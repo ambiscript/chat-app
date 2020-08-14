@@ -1,6 +1,6 @@
 {
   "name": "mean-udemy-course",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
     "e2e": "ng e2e",
-    "start:server": "nodemon server.js"
+    "start:server": "nodemon backend/server.js"
   },
   "private": true,
   "dependencies": {

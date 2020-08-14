@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://ambiscript-chat-app.herokuapp.com/api'
 };
